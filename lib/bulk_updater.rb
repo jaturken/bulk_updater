@@ -33,7 +33,7 @@ class BulkUpdater
       values = data.map do |data_unit|
         value = data_unit[column]
         quote_value(value)
-      end.compact.join(', ')
+      end.compact.uniq.join(', ')
       "#{column.to_s} IN (#{values})"
     end.join(' AND ')
   end
