@@ -40,7 +40,7 @@ executes SQL like:
 
 ## Notes
 
-- Gem has fairly straightforward logic for gemerating SQL resquest. It generates only one type of request(as shown in example).
+- Gem has fairly straightforward logic for generating SQL request. It generates only one type of request(as shown in example).
 - There are limitaions in idea. You can not find record by key and update the same key. E.g., `columns_to_find` and `columns_to_update` can not intersect.
 - Yet no tests. I've just extracted library from real project, it really works, but I still have to idea how to write clean unit tests. Any ideas appreciated.
 - Again: any ideas appreciated.
