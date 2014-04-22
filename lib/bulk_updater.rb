@@ -21,7 +21,7 @@ class BulkUpdater
     statement = update_statement
     condition = update_condition
     if statement.present?
-      sql= "UPDATE #{table} SET #{statement}  where #{condition}"
+      sql= "UPDATE #{table} SET #{statement} WHERE #{condition}"
       model.connection.execute(sql)
     end
   end
@@ -44,7 +44,7 @@ class BulkUpdater
         case_condition = when_then(column, data_unit)
       end.compact.join(' ')
       if case_conditions.present?
-        "#{column.to_s} = case #{case_conditions} else #{column.to_s} end"
+        "#{column.to_s} = CASE #{case_conditions} ELSE #{column.to_s} end"
       end
     end.compact.join(', ')
   end
@@ -54,11 +54,11 @@ class BulkUpdater
       value = data_unit[column_to_find]
       value = quote_value(value)
       "#{column_to_find.to_s} = #{value}"
-    end.compact.join(' and ')
+    end.compact.join(' AND ')
     update_value = data_unit[column_to_update]
     if update_value.present?
       update_value = quote_value(update_value)
-      "when #{one_record_condition} then #{update_value}" 
+      "WHEN #{one_record_condition} THEN #{update_value}" 
     end
   end
 

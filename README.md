@@ -27,15 +27,15 @@ Input params:
 executes SQL like:
 
     UPDATE apps
-      SET name = case
-        when author_id = 1 and is_adult = 1 then 'Name 1'
-        when author_id = 2 and is_adult = 1 then 'Name 2'
-        else name
-      end,
-      price = case
-        when author_id = 1 and is_adult = 1 then 9.99
-        else price
-      end
+      SET name = CASE
+        WHEN author_id = 1 AND is_adult = 1 THEN 'Name 1'
+        WHEN author_id = 2 AND is_adult = 1 THEN 'Name 2'
+        ELSE name
+      END,
+      price = CASE
+        WHEN author_id = 1 AND is_adult = 1 THEN 9.99
+        ELSE price
+      END
     WHERE author_id IN (1, 2) AND is_adult IN (1)
 
 ## Notes
