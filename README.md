@@ -10,7 +10,9 @@ Input params:
 - `columns_to_find` - array of columns for when condition. Must be array of symbols.
 - `columns_to_update` - array of columns for updating. Must be array of symbols.
 - `data` - array with all required data. Must be array of hashes. Each hash must contain all columns_to_find and required columns to update.
+
 ## Example:
+
     data = [{author_id: 1, is_adult: 1, name: 'Name 1', price: 9.99},
             {author_id: 2, is_adult: 1, name: 'Name 2'}]
     BulkUpdater.update!(App, [:author_id, :is_adult], [:name, :price], data)
