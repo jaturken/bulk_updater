@@ -17,6 +17,7 @@ Input params:
             {author_id: 2, is_adult: 1, name: 'Name 2'}]
     BulkUpdater.update!(App, [:author_id, :is_adult], [:name, :price], data)
 executes SQL like:
+
     UPDATE apps
       SET name = CASE
         WHEN author_id = 1 AND is_adult = 1 THEN 'Name 1'
