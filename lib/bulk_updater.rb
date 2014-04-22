@@ -1,27 +1,5 @@
 require "bulk_updater/version"
 
-# BulkUpdater generates and executes SQL like
-# UPDATE apps
-#   set name = case
-#     when app_id = 1 and is_adult = 1 then 'Adult name 1'
-#     when app_id = 2 and is_adult = 1 then 'Adult name 2'
-#   end
-#  where app_id in (1,2) and is_adult in (1)
-#
-# Input params:
-# model - model which table must be updated
-# columns_to_find - array of columns for when condition.
-#                   Must be array of symbols
-# columns_to_update - array of columns for updating.
-#                     Must be array of symbols
-# data - array with all required data. Must be array of hashes
-#         Must contain all columns_to_find and required columns to update
-# Example:
-# data = [{app_id: 1, is_adult: 1, name 'Adult name 1'},
-#         {app_id: 2, is_adult: 1, name 'Adult name 2'}]
-# BulkUpdater.update!(App, [:app_id, :is_adult], [name], data)
-# Generated SQL is shown above
-
 class BulkUpdater
   attr_reader :model, :columns_to_find, :columns_to_update, :data
   
