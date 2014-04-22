@@ -5,27 +5,16 @@ Generate and execute SQL UPDATE for bulk updating multiple records by one reques
 ## Usage
 
     BulkUpdater.update!(model, columns_to_find, columns_to_update, data)
-
 Input params:
-
 - `model` - model which table must be updated.
-
-- `columns_to_find` - array of columns for when condition.
-                  Must be array of symbols.
-
-- `columns_to_update` - array of columns for updating.
-                    Must be array of symbols.
-
+- `columns_to_find` - array of columns for when condition. Must be array of symbols.
+- `columns_to_update` - array of columns for updating. Must be array of symbols.
 - `data` - array with all required data. Must be array of hashes. Each hash must contain all columns_to_find and required columns to update.
-
 ## Example:
-
     data = [{author_id: 1, is_adult: 1, name: 'Name 1', price: 9.99},
             {author_id: 2, is_adult: 1, name: 'Name 2'}]
     BulkUpdater.update!(App, [:author_id, :is_adult], [:name, :price], data)
-
 executes SQL like:
-
     UPDATE apps
       SET name = CASE
         WHEN author_id = 1 AND is_adult = 1 THEN 'Name 1'
