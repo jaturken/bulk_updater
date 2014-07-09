@@ -1,0 +1,5 @@
+require 'bulk_updater'
+require 'minitest/unit'
+require 'minitest/autorun'
+require 'minitest/mock'
+require 'minitest/pride'

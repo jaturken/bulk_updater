@@ -5,9 +5,6 @@ class BulkUpdater
     new(model, columns_to_find, columns_to_update, data).send(:update!)
   end
 
-  class Updater
-    attr_reader :model, :columns_to_find, :columns_to_update, :data
-
     def initialize(model, columns_to_find, columns_to_update, data)
       @model = model
       @columns_to_update = columns_to_update
@@ -41,7 +38,7 @@ class BulkUpdater
       conditions = data.map do |data_unit|
         when_then(column, data_unit)
       end.compact.join(' ')
-      "#{column} = CASE #{conditions} ELSE #{column} END" if conditions.present?
+      "#{column} = CASE #{conditions} ELSE #{column} END" if conditions.empty?
     end.compact.join(', ')
   end
 
@@ -52,16 +49,15 @@ class BulkUpdater
       "#{column_to_find} = #{value}"
     end.compact.join(' AND ')
     update_value = data_unit[column_to_update]
-    if update_value.present?
+    if !update_value.nil?
       "WHEN #{one_record_condition} THEN #{quote_value(update_value)}"
     end
 
-    def quote_value(value)
-      if value.is_a?(Integer)
-        value.to_s
-      else
-        ActiveRecord::Base.connection.quote(value)
-      end
+  def quote_value(value)
+    if value.is_a?(Integer)
+      value.to_s
+    else
+      model.connection.quote(value)
     end
   end
 
