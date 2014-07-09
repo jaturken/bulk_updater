@@ -1,9 +1,8 @@
-require "bulk_updater/version"
-
-module BulkUpdater
-
-  def update!(model, columns_to_find, columns_to_update, data)
-    Updater.new(model, columns_to_find, columns_to_update, data).update!
+class BulkUpdater
+  attr_reader :model, :columns_to_find, :columns_to_update, :data
+  
+  def self.update!(model, columns_to_find, columns_to_update, data)
+    new(model, columns_to_find, columns_to_update, data).send(:update!)
   end
 
   class Updater
@@ -26,17 +25,16 @@ module BulkUpdater
       end
     end
 
-    private
 
-    def update_condition
-      columns_to_find.map do |column|
-        values = data.map do |data_unit|
-          value = data_unit[column]
-          quote_value(value)
-        end.compact.uniq.join(', ')
-        "#{column.to_s} IN (#{values})"
-      end.join(' AND ')
-    end
+  def update_condition
+    columns_to_find.map do |column|
+      values = data.map do |data_unit|
+        value = data_unit[column]
+        quote_value(value)
+      end.compact.uniq.join(', ')
+      "#{column.to_s} IN (#{values})"
+    end.join(' AND ')
+  end
 
   def update_statement
     columns_to_update.map do |column|
