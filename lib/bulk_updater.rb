@@ -39,7 +39,7 @@ class BulkUpdater
       conditions = data.map do |data_unit|
         when_then(column, data_unit)
       end.compact.join(' ')
-      "#{column} = CASE #{conditions} ELSE #{column} END" if conditions.empty?
+      "#{column} = CASE #{conditions} ELSE #{column} END" if !conditions.empty?
     end.compact.join(', ')
   end
 
@@ -53,6 +53,7 @@ class BulkUpdater
     if !update_value.nil?
       "WHEN #{one_record_condition} THEN #{quote_value(update_value)}"
     end
+  end
 
   def quote_value(value)
     if value.is_a?(Integer)
