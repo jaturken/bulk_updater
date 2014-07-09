@@ -5,23 +5,24 @@ class BulkUpdater
     new(model, columns_to_find, columns_to_update, data).send(:update!)
   end
 
-    def initialize(model, columns_to_find, columns_to_update, data)
-      @model = model
-      @columns_to_update = columns_to_update
-      @columns_to_find = columns_to_find
-      @data = data
-    end
+  private
 
-    def update!
-      table = model.table_name
-      statement = update_statement
-      condition = update_condition
-      if statement.present?
-        sql= "UPDATE #{table} SET #{statement} WHERE #{condition}"
-        model.connection.execute(sql)
-      end
-    end
+  def initialize(model, columns_to_find, columns_to_update, data)
+    @model = model
+    @columns_to_update = columns_to_update
+    @columns_to_find = columns_to_find
+    @data = data
+  end
 
+  def update!
+    table = model.table_name
+    statement = update_statement
+    condition = update_condition
+    if statement.present?
+      sql= "UPDATE #{table} SET #{statement} WHERE #{condition}"
+      model.connection.execute(sql)
+    end
+  end
 
   def update_condition
     columns_to_find.map do |column|
